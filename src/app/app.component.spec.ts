@@ -14,7 +14,7 @@ describe("AppComponent", () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'my-app' title`, () => {
+  it(`should have the 'base-angular-app' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual("base-angular-app");
@@ -25,7 +25,7 @@ describe("AppComponent", () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector("h1")?.textContent).toContain(
-      "Hello, my-app",
+      "base-angular-app is running!",
     );
   });
 });
