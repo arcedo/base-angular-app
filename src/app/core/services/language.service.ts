@@ -8,7 +8,7 @@ export class LanguageService {
   private translate = inject(TranslateService);
   private readonly STORAGE_KEY = "language";
   private readonly DEFAULT_LANGUAGE = "en";
-  public readonly availableLanguages: string[] = ["en", "es"];
+  public readonly availableLanguages: string[] = ["en"];
 
   constructor() {
     this.initializeLanguage();
