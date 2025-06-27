@@ -1,30 +1,25 @@
 import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError, retry, timer } from 'rxjs';
+import { inject } from '@angular/core';
+import { NotificationService } from '../../shared/services/notification.service';
+import { getErrorMessage } from '../utils/error-messages.util';
 
 export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
+  const notificationService = inject(NotificationService);
+  
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      let errorMessage = 'An unknown error occurred';
+      const errorMessage = getErrorMessage(error);
+
+      // Check if this request should skip notifications
+      const skipNotification = req.headers.get('X-Skip-Error-Notification') === 'true';
       
-      if (error.error instanceof ErrorEvent) {
-        errorMessage = `Client Error: ${error.error.message}`;
-      } else {
-        switch (error.status) {
-          case 400:
-            errorMessage = 'Bad Request: Please check your request parameters';
-            break;
-          case 404:
-            errorMessage = 'Resource not found';
-            break;
-          case 500:
-            errorMessage = 'Internal Server Error: Please try again later';
-            break;
-          case 503:
-            errorMessage = 'Service Unavailable: The API is temporarily down';
-            break;
-          default:
-            errorMessage = `Server Error: ${error.status} - ${error.message}`;
-        }
+      if (!skipNotification) {
+        notificationService.addNotification({
+          message: errorMessage,
+          type: 'error',
+          duration: 5000
+        });
       }
 
       console.error('HTTP Error:', {
