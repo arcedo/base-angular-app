@@ -1,5 +1,16 @@
 {
-  "main": {
-    "test": "Some text translated to english"
+  "MAIN": {
+    "TEST": "Some text translated to english."
+  },
+  "ROUTES": {
+    "HOME": {
+      "TITLE": "Home"
+    },
+    "ERROR": {
+      "TITLE": "Page Not Found",
+      "H1": "Oh dear, this page seems to be on holiday!",
+      "DESCRIPTION": " The page you are looking for does not exist or has been moved. Please check the URL or return to the homepage.",
+      "LINK": "Go to Home page"
+    }
   }
 }
